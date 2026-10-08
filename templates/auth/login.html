@@ -1,0 +1,21 @@
+{% extends "auth/base.html" %}
+
+{% block title %}Kirish{% endblock %}
+
+{% block content %}
+<h1>Hisobga kiring</h1>
+<p class="intro">Tasdiqlangan emailingiz va parolingizni kiriting.</p>
+{% if form.non_field_errors %}<div class="errors" role="alert">{{ form.non_field_errors }}</div>{% endif %}
+<form method="post" novalidate>
+    {% csrf_token %}
+    {% for field in form %}
+        <div class="field">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% for error in field.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+        </div>
+    {% endfor %}
+    <div class="actions"><button type="submit">Kirish</button></div>
+</form>
+<p class="foot"><a href="{% url 'register_page' %}">Yangi hisob yaratish</a></p>
+{% endblock %}

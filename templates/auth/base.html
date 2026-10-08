@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="uz">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Hisob yaratish{% endblock %}</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --ink: #172b2b;
+            --muted: #60716e;
+            --line: #d8e1dc;
+            --paper: #fbfcf8;
+            --green: #166b52;
+            --green-dark: #10543f;
+            --mint: #e6f3eb;
+            --coral: #ae3f2c;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: var(--ink);
+            background: radial-gradient(ellipse at 82% 8%, #d9eee3 0, transparent 32%), var(--paper);
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+        main { width: min(100% - 32px, 480px); margin: 8vh auto; }
+        .brand { margin-bottom: 28px; color: var(--green); font-size: 14px; font-weight: 750; }
+        .panel { padding: clamp(24px, 6vw, 40px); border: 1px solid var(--line); border-radius: 12px; background: #fff; box-shadow: 0 18px 50px #173c2d12; }
+        h1 { margin: 0 0 8px; font-size: 30px; line-height: 1.15; }
+        .intro { margin: 0 0 26px; color: var(--muted); line-height: 1.55; }
+        .field { margin: 0 0 16px; }
+        label { display: block; margin-bottom: 6px; font-size: 14px; font-weight: 650; }
+        input { width: 100%; min-height: 46px; padding: 10px 12px; border: 1px solid #bdcbc4; border-radius: 7px; color: var(--ink); background: #fff; font: inherit; }
+        input:focus { outline: 3px solid #a7d6c0; border-color: var(--green); }
+        button, .button { display: inline-flex; justify-content: center; align-items: center; min-height: 46px; padding: 0 18px; border: 0; border-radius: 7px; color: #fff; background: var(--green); font: inherit; font-weight: 700; text-decoration: none; cursor: pointer; }
+        button:hover, .button:hover { background: var(--green-dark); }
+        .secondary { color: var(--green); background: var(--mint); }
+        .secondary:hover { color: #fff; }
+        .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+        .errors, .messages { margin: 0 0 18px; padding: 12px 14px; border-radius: 7px; color: #812f22; background: #fff0ed; }
+        .messages.success { color: #14583f; background: var(--mint); }
+        .field-error { margin: 6px 0 0; color: var(--coral); font-size: 13px; }
+        .foot { margin: 20px 0 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
+        a { color: var(--green); }
+        @media (max-width: 480px) { main { margin: 24px auto; } .panel { border-radius: 9px; } h1 { font-size: 26px; } }
+    </style>
+</head>
+<body>
+<main>
+    <div class="brand">Django Custom User</div>
+    <section class="panel">
+        {% for message in messages %}
+            <div class="messages {% if message.tags == 'success' %}success{% endif %}" role="status">{{ message }}</div>
+        {% endfor %}
+        {% block content %}{% endblock %}
+    </section>
+</main>
+</body>
+</html>

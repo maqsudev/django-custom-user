@@ -1,0 +1,32 @@
+{% extends "auth/base.html" %}
+
+{% block title %}Emailni tasdiqlash{% endblock %}
+
+{% block content %}
+{% if verified %}
+    <h1>Email tasdiqlandi</h1>
+    <p class="intro">Hisobingiz faollashtirildi. Endi tizimga kirishingiz mumkin.</p>
+    <a class="button" href="{% url 'login_page' %}">Kirish</a>
+{% else %}
+    <h1>Emailni tasdiqlang</h1>
+    <p class="intro">Emailingizga yuborilgan 6 xonali kodni kiriting. Kod 10 daqiqa amal qiladi.</p>
+    {% if form.non_field_errors %}<div class="errors" role="alert">{{ form.non_field_errors }}</div>{% endif %}
+    <form method="post" novalidate>
+        {% csrf_token %}
+        <div class="field">
+            <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+            {{ form.email }}
+            {% for error in form.email.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+        </div>
+        <div class="field">
+            <label for="{{ form.otp.id_for_label }}">{{ form.otp.label }}</label>
+            {{ form.otp }}
+            {% for error in form.otp.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+        </div>
+        <div class="actions">
+            <button type="submit" name="action" value="verify">Kodni tasdiqlash</button>
+            <button class="secondary" type="submit" name="action" value="resend" formnovalidate>Yangi kod yuborish</button>
+        </div>
+    </form>
+{% endif %}
+{% endblock %}

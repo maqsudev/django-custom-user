@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework.authtoken',
 
     'api',
     'users',
@@ -146,8 +147,19 @@ EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
 # Authentication credentials
-EMAIL_HOST_USER = 'djumanovdev@gmail.com'
-EMAIL_HOST_PASSWORD = env('EMAIL_PASSWORD')
+EMAIL_HOST_USER = env(
+    'EMAIL_HOST_USER',
+    default=env('DEFAULT_FROM_EMAIL', default=''),
+)
+EMAIL_HOST_PASSWORD = ''.join(env('EMAIL_PASSWORD', default='').split())
 
 # Default from email address used in your app
-DEFAULT_FROM_EMAIL = 'djumanovdev@gmail.com'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+OTP_EXPIRY_MINUTES = 10
+
+REST_FRAMEWORK = {
+    'DEFAULT_THROTTLE_RATES': {
+        'otp_verify': '5/hour',
+    },
+}

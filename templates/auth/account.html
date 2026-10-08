@@ -1,0 +1,16 @@
+{% extends "auth/base.html" %}
+
+{% block title %}Hisob{% endblock %}
+
+{% block content %}
+<h1>Salom, {{ request.user.first_name|default:request.user.username }}</h1>
+<p class="intro">Sizning hisobingiz tasdiqlangan.</p>
+<div class="field">
+    <label>Email</label>
+    <input type="email" value="{{ request.user.email }}" readonly>
+</div>
+<form method="post" action="{% url 'logout_page' %}">
+    {% csrf_token %}
+    <div class="actions"><button type="submit">Chiqish</button></div>
+</form>
+{% endblock %}
